@@ -4,12 +4,25 @@ runtime: python311
 build:
   commands:
     build:
-      - echo "Build phase - no install here"
+      - echo "Build phase completed"
 
 run:
   runtime-version: 3.11
+
   pre-run:
     - pip3 install -r requirements.txt
+
   command: uvicorn main:app --host 0.0.0.0 --port 8080
+
   network:
     port: 8080
+
+  env:
+    - name: APP_ENV
+      value: "production"
+
+  secrets:
+    - name: API_KEY
+      value-from: "/sns-app/api-key"
+    - name: JWT_SECRET
+      value-from: "/sns-app/jwt/secret"
