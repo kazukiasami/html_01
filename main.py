@@ -1,7 +1,5 @@
-from fastapi import FastAPI
+import os
 
-app = FastAPI()
+api_key = os.getenv("API_KEY")
+jwt_secret = os.getenv("JWT_SECRET")
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello from App Runner 🚀"}
