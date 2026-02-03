@@ -1,28 +1,17 @@
 version: 1.0
-runtime: python311
+runtime: nodejs18
 
 build:
   commands:
     build:
-      - echo "Build phase completed"
+      - npm install
 
 run:
-  runtime-version: 3.11
-
-  pre-run:
-    - pip3 install -r requirements.txt
-
-  command: uvicorn main:app --host 0.0.0.0 --port 8080
-
+  runtime-version: 18
+  command: npm start
   network:
     port: 8080
 
-  env:
-    - name: APP_ENV
-      value: "production"
-
   secrets:
-    - name: API_KEY
-      value-from: "/sns-app/api-key"
-    - name: JWT_SECRET
-      value-from: "/sns-app/jwt/secret"
+    - name: DB_SECRET
+      value-from: arn:aws:secretsmanager:ap-northeast-1:620356661576:secret:rds!cluster-xxxx
