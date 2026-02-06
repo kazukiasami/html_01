@@ -21,6 +21,10 @@ def get_db_connection():
         connect_timeout=5
     )
 
+@app.get("/")
+async def root():
+    return {"message": "Hello from App Runner 🚀"}
+
 @app.get("/health/db")
 async def health_check_db():
     try:
@@ -30,18 +34,18 @@ async def health_check_db():
         result = cursor.fetchone()
         cursor.close()
         conn.close()
-
+        
         if result[0] == 1:
             return {"status": "DB疎通OK"}
         else:
             raise HTTPException(status_code=500, detail="DB connection failed")
-
+            
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"DB connection error: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"DB connection error: {str(e)}")
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+# デバッグ用エンドポイント
+@app.get("/debug/env")
+async def debug_env():
+    return {
+        "DB_SECRET_exists": bool(os.getenv("DB_SECRET")),
+        "DB_SECRET_length": len(os.getenv("DB_SECRET", "")) if os.getenv("DB_SECRET") else 0
