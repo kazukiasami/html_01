@@ -15,4 +15,4 @@ run:
       value: "8000"
   secrets:
     - name: DB_SECRET
-      value-from: arn:aws:secretsmanager:ap-northeast-1:123456789012:secret:rds!cluster-xxxxx
+      value-from: arn:aws:secretsmanager:ap-northeast-1:620356661576:secret:rds!cluster-c2201553-ab59-4022-9eba-c1160e60b06f-AdBmRf
